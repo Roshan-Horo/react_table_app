@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal, ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -15,6 +16,12 @@ import {
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -80,10 +87,24 @@ export const columns: ColumnDef<Recipe>[] = [
       const image: string = row.getValue("image")
  
       return (
-        <Avatar>
-          <AvatarImage src={image} alt="recipe image" />
-          <AvatarFallback>{name.substring(0,1)}</AvatarFallback>
-        </Avatar>
+        <HoverCard>
+        <HoverCardTrigger>
+          <Avatar>
+            <AvatarImage src={image} alt="recipe image" />
+            <AvatarFallback>{name.substring(0,1)}</AvatarFallback>
+          </Avatar>
+        </HoverCardTrigger>
+        <HoverCardContent>
+            <AspectRatio ratio={16 / 9} className="bg-muted">
+            <Image
+              src={image}
+              alt="recipe image"
+              fill
+              className="rounded-md object-cover"
+            />
+        </AspectRatio>
+        </HoverCardContent>
+      </HoverCard>
       )
     },
   },
